@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }: Props) {
         <Card>
           <Title>Bem-vindo 👋</Title>
           <Subtitle>Entre para acompanhar seus hábitos, tarefas e nutrição.</Subtitle>
-          <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
+          <Input placeholder="E-mail" keyboardType="email-addresss" autoCapitalize="none" value={email} onChangeText={setEmail} />
           <View style={{ height: 12 }} />
           <Input placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
           <View style={{ height: 16 }} />

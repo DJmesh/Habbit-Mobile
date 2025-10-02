@@ -2,7 +2,10 @@
   "compilerOptions": {
     "allowJs": true,
     "jsx": "react",
-    "lib": ["ES2020", "dom"],
+    "lib": [
+      "ES2020",
+      "dom"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -11,7 +14,16 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx", "App.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "App.tsx"
+  ],
+  "extends": "expo/tsconfig.base"
 }

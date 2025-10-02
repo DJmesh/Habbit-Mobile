@@ -11,9 +11,7 @@ type TaskState = {
   toggleTask: (id: string) => Promise<void>;
 };
 
-function todayISO() {
-  return new Date().toISOString();
-}
+function nowISO() { return new Date().toISOString(); }
 
 export const useTasks = create<TaskState>((set, get) => ({
   db: seed,
@@ -23,16 +21,11 @@ export const useTasks = create<TaskState>((set, get) => ({
     set({ db: next });
   },
 
-  async addTask(title: string, dateISOParam?: string) {
+  async addTask(title: string, dateISO?: string) {
     const { db } = get();
     const next: DB = { ...db, tasks: [...db.tasks] };
     const id = 't_' + Math.random().toString(36).slice(2, 10);
-    const t: Task = {
-      id,
-      title: title.trim() || 'Nova tarefa',
-      date: (dateISOParam || todayISO()),
-      done: false,
-    };
+    const t: Task = { id, title: title.trim() || 'Nova tarefa', date: dateISO || nowISO(), done: false };
     next.tasks.unshift(t);
     set({ db: next });
     await setItem(KEY, next);
