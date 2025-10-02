@@ -1,4 +1,4 @@
-# HabitApp — Expo SDK 53 PRO (Totalmente funcional)
+# HabitApp — Expo SDK 53 PRO
 
 App completo em **Expo SDK 53** com:
 - **Login/Cadastro** em cache (AsyncStorage)
