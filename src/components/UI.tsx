@@ -15,10 +15,7 @@ export function Screen({ children, style, ...rest }: ViewProps & { children: Rea
 
 export function Card({ children, style, ...rest }: ViewProps & { children: React.ReactNode }) {
   return (
-    <View
-      style={[{ backgroundColor: colors.card, borderRadius: 16, padding: 16 }, style]}
-      {...rest}
-    >
+    <View style={[{ backgroundColor: colors.card, borderRadius: 16, padding: 16 }, style]} {...rest}>
       {children}
     </View>
   );
@@ -32,12 +29,7 @@ export function Subtitle({ children }: { children: React.ReactNode }) {
   return <Text style={{ color: colors.subtext, fontSize: 14, marginBottom: 12 }}>{children}</Text>;
 }
 
-type ButtonProps = {
-  title: string;
-  onPress?: () => void;
-  disabled?: boolean;
-  style?: any;
-};
+type ButtonProps = { title: string; onPress?: () => void; disabled?: boolean; style?: any; };
 
 export function Button({ title, onPress, disabled, style }: ButtonProps) {
   return (
@@ -65,12 +57,7 @@ export const Input = React.forwardRef<TextInput, TextInputProps>((props, ref) =>
   <TextInput
     ref={ref}
     placeholderTextColor={colors.subtext}
-    style={{
-      backgroundColor: colors.muted,
-      color: colors.text,
-      padding: 12,
-      borderRadius: 10,
-    }}
+    style={{ backgroundColor: colors.muted, color: colors.text, padding: 12, borderRadius: 10 }}
     {...props}
   />
 ));
