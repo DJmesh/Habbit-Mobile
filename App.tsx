@@ -1,4 +1,3 @@
-// App.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
