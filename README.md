@@ -11,7 +11,7 @@ App completo em **Expo SDK 53** com:
 - Alias `@/*` com **babel-plugin-module-resolver** (instalado)
 
 > **Nota de compatibilidade:** `package.json` atual está com **Expo 54.0.20** e React Native **0.81.5**.  
-> O texto acima mantém a seção “SDK 53 PRO” (como você pediu) **mas** o projeto já está no SDK 54. Se quiser fixar no **SDK 53**, troque a versão de `expo` no `package.json` para a faixa do SDK 53 e rode `npx expo install --fix`. Se preferir **manter SDK 54**, o restante do README vale do mesmo jeito; apenas ignore a menção direta ao SDK 53.
+> O texto acima mantém a seção “SDK 53 PRO” **mas** o projeto já está no SDK 54. Se quiser fixar no **SDK 53**, troque a versão de `expo` no `package.json` para a faixa do SDK 53 e rode `npx expo install --fix`. Se preferir **manter SDK 54**, o restante do README vale do mesmo jeito; apenas ignore a menção direta ao SDK 53.
 
 ## Rodar
 ```bash
