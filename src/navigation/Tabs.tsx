@@ -8,6 +8,7 @@ import NutritionScreen from '@/screens/Tabs/NutritionScreen';
 import LocationScreen from '@/screens/Tabs/LocationScreen';
 import ProfileScreen from '@/screens/Tabs/ProfileScreen';
 import RewardsScreen from '@/screens/Tabs/RewardsScreen';
+import NotificationsScreen from '@/screens/Tabs/NotificationsScreen';
 import { colors } from '@/theme/colors';
 import { Ionicons, Feather } from '@expo/vector-icons';
 
@@ -18,8 +19,9 @@ export type TabParamList = {
   Progress: undefined;
   Nutrition: undefined;
   Location: undefined;
-  Profile: undefined;
   Rewards: undefined;
+  Notifications: undefined;
+  Profile: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -29,9 +31,9 @@ export default function Tabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: '#0D141B', borderTopColor: '#0D141B' },
         tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.subtext
+        tabBarInactiveTintColor: colors.subtext,
+        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border }
       }}
       initialRouteName="Today"
     >
@@ -40,7 +42,7 @@ export default function Tabs() {
         component={TodayScreen}
         options={{
           tabBarLabel: 'Hoje',
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />
+          tabBarIcon: ({ color, size }) => <Ionicons name="today" color={color} size={size} />
         }}
       />
       <Tab.Screen
@@ -64,7 +66,7 @@ export default function Tabs() {
         component={ProgressScreen}
         options={{
           tabBarLabel: 'Progresso',
-          tabBarIcon: ({ color, size }) => <Feather name="bar-chart-2" color={color} size={size} />
+          tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart" color={color} size={size} />
         }}
       />
       <Tab.Screen
@@ -72,23 +74,15 @@ export default function Tabs() {
         component={NutritionScreen}
         options={{
           tabBarLabel: 'Nutrição',
-          tabBarIcon: ({ color, size }) => <Ionicons name="restaurant" color={color} size={size} />
+          tabBarIcon: ({ color, size }) => <Ionicons name="nutrition" color={color} size={size} />
         }}
       />
       <Tab.Screen
         name="Location"
         component={LocationScreen}
         options={{
-          tabBarLabel: 'Locais',
-          tabBarIcon: ({ color, size }) => <Ionicons name="navigate" color={color} size={size} />
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Perfil',
-          tabBarIcon: ({ color, size }) => <Ionicons name="person" color={color} size={size} />
+          tabBarLabel: 'Local',
+          tabBarIcon: ({ color, size }) => <Ionicons name="location" color={color} size={size} />
         }}
       />
       <Tab.Screen
@@ -97,6 +91,22 @@ export default function Tabs() {
         options={{
           tabBarLabel: 'Rewards',
           tabBarIcon: ({ color, size }) => <Ionicons name="trophy" color={color} size={size} />
+        }}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          tabBarLabel: 'Notificações',
+          tabBarIcon: ({ color, size }) => <Ionicons name="notifications" color={color} size={size} />
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: ({ color, size }) => <Ionicons name="person" color={color} size={size} />
         }}
       />
     </Tab.Navigator>

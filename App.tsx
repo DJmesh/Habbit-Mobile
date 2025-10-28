@@ -8,6 +8,8 @@ import LoginScreen from '@/screens/Auth/LoginScreen';
 import RegisterScreen from '@/screens/Auth/RegisterScreen';
 import Tabs from '@/navigation/Tabs';
 import TransitionOverlay from '@/components/TransitionOverlay';
+import Notifier from '@/components/Notifier';
+import DueSoonWatcher from '@/components/DueSoonWatcher';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -68,6 +70,8 @@ export default function App() {
         {/* Overlay animado entre transições */}
         <TransitionOverlay visible={overlayVisible} />
       </NavigationContainer>
+       <Notifier />
+       <DueSoonWatcher />
     </SafeAreaProvider>
   );
 }

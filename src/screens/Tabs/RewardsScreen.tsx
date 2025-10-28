@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, Pressable, Animated, Easing } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View, Text, FlatList, Pressable, Animated, Share } from 'react-native';
 import { Screen, Card, Button, Title, Subtitle } from '@/components/UI';
 import { useAchievements } from '@/store/achievements';
 import Badge from '@/components/Badge';
@@ -8,59 +8,69 @@ import Fireworks from '@/components/Fireworks';
 import { colors } from '@/theme/colors';
 
 export default function RewardsScreen() {
-  const { badges, unlock, mockUnlockNext, resetAll } = useAchievements();
+  const { badges, mockUnlockNext, resetAll, lastUnlockedId, clearLastUnlocked } = useAchievements();
   const [celebrating, setCelebrating] = useState(false);
   const [justUnlocked, setJustUnlocked] = useState<string | null>(null);
 
-  const scale = new Animated.Value(0);
+  const scale = useMemo(() => new Animated.Value(0), []);
   const pop = () => {
     scale.setValue(0);
     Animated.spring(scale, { toValue: 1, useNativeDriver: true, speed: 18, bounciness: 12 }).start();
   };
 
-  function handleMockUnlock() {
-    const id = mockUnlockNext();
-    if (!id) return;
-    setJustUnlocked(id);
+  useEffect(() => {
+    if (!lastUnlockedId) return;
+    setJustUnlocked(lastUnlockedId);
     setCelebrating(true);
     pop();
-    setTimeout(() => setCelebrating(false), 1200);
-  }
+    const t = setTimeout(() => {
+      setCelebrating(false);
+      clearLastUnlocked();
+    }, 1400);
+    return () => clearTimeout(t);
+  }, [lastUnlockedId, clearLastUnlocked]);
 
-  function handleUnlock(badgeId: string) {
-    const ok = unlock(badgeId);
-    if (!ok) return;
-    setJustUnlocked(badgeId);
-    setCelebrating(true);
-    pop();
-    setTimeout(() => setCelebrating(false), 1200);
-  }
+  const onShareAll = () => {
+    const unlocked = badges.filter(b => b.unlocked);
+    const lines = [
+      '🏅 Minhas conquistas no HabitApp:',
+      ...unlocked.map(b => `• ${b.title}`),
+      unlocked.length ? '' : '• (ainda nenhuma — mas já já vem 💪)',
+    ];
+    Share.share({ message: lines.join('\n') });
+  };
+
+  const onShareUnlocked = () => {
+    const b = badges.find(x => x.id === justUnlocked);
+    if (!b) return;
+    Share.share({
+      message: `🏆 Conquista desbloqueada no HabitApp: ${b.title}\n${b.description}`,
+    });
+  };
 
   return (
     <Screen>
       <View style={{ gap: 12 }}>
         <Title>Recompensas</Title>
-        <Subtitle> Colecione emblemas conforme você completa suas metas. Toque em um emblema bloqueado para reivindicar.</Subtitle>
-        <View style={{ flexDirection: 'row', gap: 8 }}>
-          <Button title="Desbloqueie uma recompensa mock" onPress={handleMockUnlock} />
+        <Subtitle>
+          A 1ª interação libera a primeira conquista; depois em 5, 10 e 15 interações.
+        </Subtitle>
+
+        <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
+          <Button title="Compartilhar minhas conquistas" onPress={onShareAll} />
+          <Button title="Desbloquear mock" onPress={mockUnlockNext} />
           <Button title="Reset" onPress={resetAll} style={{ backgroundColor: colors.danger }} />
         </View>
 
         <Card style={{ marginTop: 8 }}>
           <FlatList
             data={badges}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             numColumns={3}
             columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 18 }}
             renderItem={({ item }) => (
-              <Pressable onPress={() => !item.unlocked && handleUnlock(item.id)} style={{ width: '32%', alignItems: 'center' }}>
-                <Badge
-                  color={item.color}
-                  accent={item.accent}
-                  icon={item.icon}
-                  title={item.title}
-                  locked={!item.unlocked}
-                />
+              <Pressable disabled style={{ width: '32%', alignItems: 'center' }}>
+                <Badge color={item.color} accent={item.accent} icon={item.icon} title={item.title} locked={!item.unlocked} />
               </Pressable>
             )}
           />
@@ -82,10 +92,12 @@ export default function RewardsScreen() {
                 backgroundColor: colors.card
               }}
             >
-              <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700' }}>Achievement Unlocked!</Text>
+              <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700' }}>Parabéns! Conquista desbloqueada 🎉</Text>
               <Text style={{ color: colors.subtext, marginTop: 4 }}>
-                {badges.find(b => b.id === justUnlocked)?.title ?? 'New Badge'}
+                {badges.find((b) => b.id === justUnlocked)?.title ?? 'Nova conquista'}
               </Text>
+              <View style={{ height: 10 }} />
+              <Button title="Compartilhar" onPress={onShareUnlocked} />
             </Animated.View>
           </View>
         </>
