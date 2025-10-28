@@ -8,11 +8,11 @@ import { format } from 'date-fns';
 export default function NutritionScreen() {
   const nutri = useNutrition();
   const todayISO = new Date().toISOString();
-  const [name, setName] = useState('Café');
-  const [cal, setCal] = useState('80');
-  const [prot, setProt] = useState('2');
-  const [carb, setCarb] = useState('10');
-  const [fat, setFat] = useState('3');
+  const [name, setName] = useState('');
+  const [cal, setCal] = useState('');
+  const [prot, setProt] = useState('');
+  const [carb, setCarb] = useState('');
+  const [fat, setFat] = useState('');
 
   const mealsToday = nutri.db.meals.filter(m => m.date.slice(0,10) === todayISO.slice(0,10));
   const totals = nutri.totalsForDate(todayISO);
